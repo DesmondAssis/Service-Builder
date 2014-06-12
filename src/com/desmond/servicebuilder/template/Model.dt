@@ -1,0 +1,8 @@
+package ${packageName};
+
+${imports}
+import com.desmond.servicebuilder.model.base.intf.BaseModel;
+
+public interface ${model} extends BaseModel{
+	${setterAndGetter}
+}

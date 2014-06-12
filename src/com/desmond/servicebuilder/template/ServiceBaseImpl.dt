@@ -1,0 +1,31 @@
+package ${packageName};
+
+${imports};
+
+public abstract class ${model}ServiceBaseImpl {
+	public int add(${model} ${modelVariable}) {
+		return getDao().add(${modelVariable});
+	}
+	
+	public int update(${model} ${modelVariable}) {
+		return getDao().update(${modelVariable});
+	}
+	
+	public ${model} fetchByPrimaryKey(long primaryKey) {
+		return getDao().fetchByPrimaryKey(primaryKey);
+	}
+	
+	public int delete(long primaryKey) {
+		return getDao().delete(primaryKey);
+	}
+	
+	public ${model}DaoImpl getDao() {
+		return dao;
+	}
+	
+	public void setDao(${model}DaoImpl dao) {
+		this.dao = dao;
+	}
+
+	private ${model}DaoImpl dao;
+}

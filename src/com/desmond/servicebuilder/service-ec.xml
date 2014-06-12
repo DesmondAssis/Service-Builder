@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<desmond-builder package-path="com.desmond.ec">
+	<author>Presley</author>
+	<namespace>ec</namespace>
+	
+	<entity name="User" table-Name="ec_user" sub-package-path="user">
+        <!-- PK fields -->
+		<column name="id" type="long" primary="true" auto-increment="false"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="name" type="String" not-null="true" unique="true" />
+		<column name="password" type="String" />
+		<column name="reallyName" type="String" />
+		<column name="identity" type="String" />
+		<column name="postcode" type="String" />
+		<column name="email" type="String" unique="true" />
+		<column name="address" type="String" />
+		<column name="phone" type="String" />
+		<column name="question" type="String" />
+		<column name="answer" type="String" />
+		
+		<!-- Order -->
+		
+		<!-- Finder methods
+		<finder name="StatsGameId" return-type="Collection">
+			<finder-column name="statsGameId" />
+		</finder>
+		
+		<finder name="ScheduleId" return-type="Collection">
+			<finder-column name="scheduleId" />
+		</finder>
+		
+		<finder name="Sport" return-type="Collection">
+			<finder-column name="sport" />
+		</finder>
+		
+		<finder name="Date" return-type="Collection">
+			<finder-column name="date" />
+		</finder> -->
+    </entity>
+    
+    <!-- order -->
+    <entity name="Order" table-Name="ec_order" sub-package-path="order">
+        <!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="status" type="int" not-null="true" />
+		<column name="userId" type="long" not-null="true" />
+		<column name="name" type="String" not-null="true" />
+		<column name="address" type="String" not-null="true" />
+		<column name="postCode" type="String" />
+		<column name="telephone" type="String" not-null="true"/>
+		<column name="phone" type="String" />
+		<column name="post" type="int"  not-null="true"/>
+		<column name="pay" type="String"  not-null="true"/>
+		<column name="notes" type="String" />
+	</entity>
+	
+	<!-- order goods -->
+	<entity name="OrderGoods" table-name="ec_orderGoods" sub-package-path="order">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="orderId" type="long" not-null="true" />
+		<column name="orderGoodId" type="long" not-null="true" />
+		<column name="orderGoodNum" type="int" not-null="true" />
+		<column name="orderGoodPrice" type="double" not-null="true" />
+	</entity>
+	
+	<!-- admin -->
+	<entity name="Administrator" table-name="ec_admin" sub-package-path="user">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="userId" type="long" not-null="true" unique="true"/>
+		<column name="authority" type="int" not-null="true" />
+	</entity>
+	
+	<!-- goods -->
+	<entity name="Goods" table-name="ec_goods" sub-package-path="goods">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="name" type="long" not-null="true"/>
+		<column name="mainClass" type="String" not-null="true" />
+		<column name="subClass" type="String" not-null="true"/>
+		<column name="price" type="double" not-null="true" />
+		<column name="remain" type="int" not-null="true"/>
+		<column name="image" type="String" not-null="true" />
+		<column name="unit" type="String" not-null="true"/>
+		<column name="isRecommend" type="boolean" not-null="true" />
+	</entity>
+	
+	<!-- cart -->
+	<entity name="Cart" table-name="ec_cart" sub-package-path="cart">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="sessionId" type="String" not-null="true"/>
+		<column name="goodId" type="long" not-null="true" />
+		<column name="goodNum" type="int" />
+		<column name="userId" type="long" />
+	</entity>
+	
+	<!-- good class -->
+	<entity name="GoodsClass" table-name="ec_goodsClass" sub-package-path="goods">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="name" type="String" not-null="true" unique="true"/>
+		<column name="parentClass" type="long" />
+	</entity>
+	
+	<!-- comment -->
+	<entity name="Comment" table-name="ec_comment" sub-package-path="comment">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="userId" type="long" not-null="true"/>
+		<column name="content" type="String" not-null="true" />
+		<column name="goodId" type="long" not-null="true" />
+	</entity>
+	
+	<!-- info -->
+	<entity name="Information" table-name="ec_info" sub-package-path="info">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="title" type="String" not-null="true" unique="true"/>
+		<column name="content" type="String" not-null="true" />
+		<column name="status" type="int" not-null="true" />
+		<column name="type" type="int" not-null="true" />
+	</entity>
+	
+	<!-- salestatics -->
+	<entity name="SaleStatics" table-name="ec_saleStatics" sub-package-path="sale">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="goodId" type="long" not-null="true"/>
+		<column name="goodsClass" type="long" not-null="true" />
+		<column name="saleNumber" type="int" not-null="true" />
+		<column name="saleNumAmount" type="int" not-null="true" />
+	</entity>
+	
+	<!-- order history -->
+	<entity name="OrderHistory" table-name="ec_orderHistory" sub-package-path="order">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="orderId" type="long" not-null="true"/>
+		<column name="modifiedReason" type="String" not-null="true" />
+		<column name="userId" type="long" not-null="true" />
+	</entity>
+	
+	<!-- admin authority -->
+	<entity name="AdminAuthority" table-name="ec_adminAuthority" sub-package-path="user">
+		<!-- PK fields -->
+		<column name="id" type="long" primary="true"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="name" type="String" not-null="true" unique="true"/>
+	</entity>
+	
+</desmond-builder>
