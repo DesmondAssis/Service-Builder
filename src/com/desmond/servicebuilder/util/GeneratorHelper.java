@@ -24,7 +24,7 @@ import com.desmond.servicebuilder.DesmondXMLConstant;
 import com.desmond.servicebuilder.model.xml.Builder;
 import com.desmond.servicebuilder.model.xml.Column;
 import com.desmond.servicebuilder.model.xml.Entity;
-import com.desmond.servicebuilder.run.TestRun;
+import com.desmond.servicebuilder.run.Run;
 import com.desmond.servicebuilder.util.enums.TemplateEnum;
 
 public class GeneratorHelper {
@@ -88,7 +88,7 @@ public class GeneratorHelper {
     	String templateFileAsString = null;
     	
 		try {
-			InputStream in = TestRun.class.getClassLoader().getResourceAsStream(fileName);
+			InputStream in = Run.class.getClassLoader().getResourceAsStream(fileName);
 			BufferedInputStream bis = new BufferedInputStream(in);
 			int size = in.available();
 			byte[] b = new byte[size];

@@ -18,9 +18,9 @@ import com.desmond.servicebuilder.util.SQLGeneratorHelper;
 import com.desmond.servicebuilder.util.ServiceImplGeneratorHelper;
 import com.desmond.servicebuilder.util.constant.DMConstants;
 
-public class TestRun {
+public class Run {
 
-	private static Logger log = Logger.getLogger(TestRun.class.getName());
+	private static Logger log = Logger.getLogger(Run.class.getName());
 
 	public static void main(String[] args) throws JDOMException, IOException {
 		// get configuration files.

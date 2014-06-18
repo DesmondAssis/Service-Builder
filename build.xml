@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="./" default="build" name="service-builder">
+	<target name="init" description="inital variables">
+		<property name="name" value="service-builder"/>
+		<property name="src" value="${basedir}/src"/>
+		<property name="lib" value="${basedir}/lib"/>
+		<property name="packages" value="com.desmond.*"/>
+		<property name="build" value="${basedir}/build"/>
+		<property name="eCommerce-lib"
+		value="L:/gitHub/projects/eCommerce/WebContent/WEB-INF/lib"/>
+		<property name="version" value="1.0"/>
+		
+		<property name="build.src" value="${build}/src"/>
+		<property name="build.classes" value="${build}/classes"/>
+		<property name="build.javadocs" value="${basedir}/doc"/>
+		<property name="jar.dest" value="${basedir}/jar"/>
+		<property name="jar.name" value="${jar.dest}/${ant.project.name}-${version}.jar"/>
+		<property name="jar.source.name" value="${jar.dest}/${ant.project.name}-${version}-source.jar"/>
+		
+		<path id="classpath">
+			<fileset dir="${lib}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</path>
+	</target>
+	
+	<target name="prepare" depends="init" description="make directories and copy source file">
+		<mkdir dir="${build.src}"/>
+		<mkdir dir="${build.classes}"/>
+		<mkdir dir="${jar.dest}"/>
+		<copy todir="${build.src}">
+			<fileset dir="${src}"/>
+		</copy>
+	</target>
+	
+	<target name="copy-jar-to-eCommerce" depends="init">
+		<copy todir="${eCommerce-lib}">
+			<fileset dir="${jar.dest}">
+				<exclude name="**/*source.jar"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="compile" depends="prepare" description="compile,copy property files">
+		<javac srcdir="${build.src}" destdir="${build.classes}">
+			<classpath refid="classpath"/>
+		</javac>
+		<copy todir="${build.classes}">
+			<fileset dir="${build.src}">
+				<include name="**/*.properties"/>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="run" depends="jar" description="run test example">
+		<java jar="${jar.name}" fork="true" failonerror="true" maxmemory="128m">
+			<classpath refid="classpath"/>
+		</java>
+	</target>
+	
+	<target name="clean-jar" depends="init">
+		<delete dir="${jar.dest}"/>
+	</target>
+	
+	<target name="jar" depends="clean-jar,compile" description="package classes/src to jar">
+		<jar destfile="${jar.name}" basedir="${build.classes}">
+			<manifest>
+				<attribute name="Author" value="Desmond Li"/>
+				<attribute name="Email" value="devtiger@163.com"/>
+				<attribute name="Blog" value="http://blog.csdn.net/firemaple_li"/>
+				<attribute name="Main-Class" value="com.desmond.servicebuilder.run.Run"/>
+			</manifest>
+		</jar>
+		<jar destfile="${jar.source.name}" basedir="${build.src}"/>
+	</target>
+	
+	<target name="javadoc" depends="compile" description="generate API">
+		<mkdir dir="${build.javadocs}"/>
+		<javadoc packagenames="${packages}" sourcepath="${build.src}" destdir="${build.javadocs}" author="true" version="true" use="true" splitindex="true" windowtitle="${name} API" doctitle="${name}">
+			<classpath refid="classpath"/>
+		</javadoc>
+	</target>
+	
+	<target name="build" depends="jar,copy-jar-to-eCommerce"/>
+	
+	<target name="clean" depends="init" description="clean temporary files">
+		<delete dir="${build.src}"/>
+		<delete dir="${build.classes}"/>
+	</target>
+</project>
