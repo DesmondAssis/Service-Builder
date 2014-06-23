@@ -1,6 +1,5 @@
 package com.desmond.servicebuilder.util;
 
-import java.io.File;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -55,27 +54,25 @@ public class ServiceImplGeneratorHelper {
 		List<Entity> entityList = builder.getEntities();
 		if (entityList != null && entityList.size() > 0) {
 			for (Entity entity : entityList) {
+				StringBuilder importsSb = new StringBuilder();
+				String outputTemplate = template
+						.replace("${packageName}",
+								entity.getPackageName() + ".impl")
+						.replace("${imports}", importsSb.toString())
+						.replace("${model}", entity.getName())
+							;
+
 				String packageFileName = entity.getPackageName().replace(".",
 						"/");
 				StringBuilder fileNameSb = new StringBuilder(
 						DMConstants.sourceDirectory);
 				fileNameSb.append(packageFileName).append("/").append("impl/")
 						.append(entity.getName()).append("LocalServiceImpl.java");
-				File file = new File(fileNameSb.toString());
 				
-				if(!file.exists()) {
-					StringBuilder importsSb = new StringBuilder();
-					String outputTemplate = template
-							.replace("${packageName}",
-									entity.getPackageName() + ".impl")
-							.replace("${imports}", importsSb.toString())
-							.replace("${model}", entity.getName());
-					
-					//log.info(template);
-					// write to source
-					GeneratorHelper
-							.writeToDestFile(outputTemplate, fileNameSb.toString());
-				}
+				//log.info(template);
+				// write to source
+				GeneratorHelper
+						.writeToDestFile(outputTemplate, fileNameSb.toString());
 			}
 		}
 	}

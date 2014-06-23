@@ -15,8 +15,4 @@ public interface DesmondXMLConstant {
 	String AUTO_INCREMENT = "auto-increment";
 	String NOT_NULL = "not-null";
 	String UNIQUE = "unique";
-	
-	String FINDER = "finder";
-	String RETURN_TYPE = "return-type";
-	String FINDER_COLUMN = "finder-column";
 }

@@ -24,8 +24,6 @@ import com.desmond.servicebuilder.DesmondXMLConstant;
 import com.desmond.servicebuilder.model.xml.Builder;
 import com.desmond.servicebuilder.model.xml.Column;
 import com.desmond.servicebuilder.model.xml.Entity;
-import com.desmond.servicebuilder.model.xml.Finder;
-import com.desmond.servicebuilder.model.xml.FinderColumn;
 import com.desmond.servicebuilder.run.Run;
 import com.desmond.servicebuilder.util.enums.TemplateEnum;
 
@@ -138,21 +136,11 @@ public class GeneratorHelper {
 				entity.setSubPackageName(eleEntity
 						.getAttributeValue(DesmondXMLConstant.SUB_PACKAGE_NAME));
 				entity.setPackageName(builder.getPackateName());
-				
-				// columns
 				List<Element> columnElementList = eleEntity
 						.getChildren(DesmondXMLConstant.COLUMN);
 				List<Column> columnList = new ArrayList<Column>(
 						columnElementList.size());
 				entity.setColumns(columnList);
-				
-				// finders
-				List<Element> finderElementList = eleEntity
-						.getChildren(DesmondXMLConstant.FINDER);
-				List<Finder> finderList = new ArrayList<Finder>(
-						finderElementList.size());
-				entity.setFinders(finderList);
-				
 				if (columnElementList != null && !columnElementList.isEmpty()) {
 					for (Element ele : columnElementList) {
 						if (ele == null)
@@ -172,28 +160,6 @@ public class GeneratorHelper {
 								BooleanUtils.toBoolean(ele
 										.getAttributeValue(DesmondXMLConstant.NOT_NULL)));
 						columnList.add(column);
-					}
-				}
-				
-				if(finderElementList != null && finderElementList.size() > 0) {
-					for(Element ele : finderElementList) {
-						Finder finder = new Finder(
-								StringUtils.trim(ele.getAttributeValue(DesmondXMLConstant.NAME)),
-								StringUtils.trim(ele.getAttributeValue(DesmondXMLConstant.RETURN_TYPE)),
-								null
-								);
-						List<Element> finderColumnElementList = ele
-								.getChildren(DesmondXMLConstant.FINDER_COLUMN);
-						List<FinderColumn> finderColumnList = new ArrayList<FinderColumn>(
-								finderColumnElementList.size());
-						for(Element coEle : finderColumnElementList) {
-							FinderColumn col 
-								= new FinderColumn(StringUtils.trim(coEle.getAttributeValue(DesmondXMLConstant.NAME)));
-							finderColumnList.add(col);
-						}
-						
-						finder.setFinderColumns(finderColumnList);
-						finderList.add(finder);
 					}
 				}
 

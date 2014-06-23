@@ -23,10 +23,6 @@ public class Run {
 	private static Logger log = Logger.getLogger(Run.class.getName());
 
 	public static void main(String[] args) throws JDOMException, IOException {
-		run();
-	}
-	
-	private static void run() throws JDOMException, IOException {
 		// get configuration files.
 		Element root = GeneratorHelper.getService();
 		
@@ -35,10 +31,10 @@ public class Run {
 		log.info(builder);
 		
 		// delete old files.
-		//String directory = DMConstants.sourceDirectory + StringUtils.replace(builder.getPackateName(), ".", "/");
-		//log.info("deleting " + directory + "...");
-		//File dir = new File(directory);
-		//FileUtils.deleteDirectory(dir);
+		String directory = DMConstants.sourceDirectory + StringUtils.replace(builder.getPackateName(), ".", "/");
+		log.info("deleting " + directory + "...");
+		File dir = new File(directory);
+		FileUtils.deleteDirectory(dir);
 		
 		// generate model.
 		ModelImplGeneratorHelper.generateModelAndImpl(builder);
@@ -58,7 +54,7 @@ public class Run {
 		
 		
 		// test CURD of user.
-//				testCURD();
+//		testCURD();
 	}
 	
 //	private static void testCURD() {

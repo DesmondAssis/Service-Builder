@@ -1,0 +1,10 @@
+package ${packageName};
+
+public class ${model}LocalServiceImpl extends ${model}ServiceBaseImpl{
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 * 
+	 * Never reference this interface directly. 
+	 * Add your custom code here.
+	 */
+}

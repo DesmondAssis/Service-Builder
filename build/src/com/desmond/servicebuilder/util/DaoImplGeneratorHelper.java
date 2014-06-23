@@ -11,8 +11,6 @@ import com.desmond.servicebuilder.exception.NoSuchDBTypeException;
 import com.desmond.servicebuilder.model.xml.Builder;
 import com.desmond.servicebuilder.model.xml.Column;
 import com.desmond.servicebuilder.model.xml.Entity;
-import com.desmond.servicebuilder.model.xml.Finder;
-import com.desmond.servicebuilder.model.xml.FinderColumn;
 import com.desmond.servicebuilder.util.constant.DMConstants;
 import com.desmond.servicebuilder.util.constant.SQLStatementConstant;
 import com.desmond.servicebuilder.util.enums.TemplateEnum;
@@ -26,11 +24,6 @@ public class DaoImplGeneratorHelper {
 	private static final String READ_STATEMENT = "\"SELECT * FROM ${table_name} WHERE ";
 	private static final String DELETE_STATEMENT = "\"DELETE FROM ${table_name} WHERE ";
 	
-	/**
-	 * insert - sql
-	 * @param numOfFields
-	 * @return
-	 */
 	private static String getInsertStatement(int numOfFields) {
 		if(numOfFields <= 0) {
 			return null;
@@ -46,12 +39,7 @@ public class DaoImplGeneratorHelper {
 		return INSERT_STATEMENT.replace("${question_marks}", questionMarksSb.toString());
 	}
 	
-	/**
-	 * insert get data
-	 * @param entity
-	 * @param numOfFields
-	 * @return
-	 */
+	
 	private static String getInsertSetStatement(Entity entity, int numOfFields) {
 		List<Column> fields = entity != null ? entity.getColumns() : null;
 		if(fields == null || fields.isEmpty()) {
@@ -86,12 +74,6 @@ public class DaoImplGeneratorHelper {
 		return primaryKeyColumn.getName() + " = ?";
 	}
 	
-	/**
-	 * select get data
-	 * @param entity
-	 * @param numOfFields
-	 * @return
-	 */
 	private static String getReadStatement(Entity entity, int numOfFields) {
 		List<Column> fields = entity != null ? entity.getColumns() : null;
 		if(fields == null || fields.isEmpty()) {
@@ -122,87 +104,6 @@ public class DaoImplGeneratorHelper {
 		return setStatementSb.toString();
 	}
 	
-	/**
-	 * finder get data
-	 * @param entity
-	 * @param numOfFields
-	 * @return
-	 */
-	private static String getFinderStatement(Entity entity, String finderTemplate) {
-		List<Finder> finders = entity != null ? entity.getFinders() : null;
-		if(finders == null || finders.isEmpty()) {
-			return "";
-		}
-		
-		StringBuilder finderMethodsSb = new StringBuilder("");
-		
-		for(int i = 0; i < finders.size(); i++) {
-			Finder finder = finders.get(i);
-			String returnType
-				= TypeTransformUtil.returnTypeTransform(finder.getReturnType(), entity.getName());
-			
-			String methodName = finder.getName();
-			String returnDecalre 
-				= TypeTransformUtil.returnDeclare(finder.getReturnType(), entity.getName());
-			
-			StringBuilder argsSb = new StringBuilder();
-			StringBuilder finderSqlSb = new StringBuilder();
-			StringBuilder finderSetSqlSb = new StringBuilder();
-			
-			for(int j = 0; j < finder.getFinderColumns().size(); j++) {
-				FinderColumn finderColumn = finder.getFinderColumns().get(j);
-				Column column = TypeTransformUtil.findColumnByNane(entity, finderColumn.getName());
-				
-				// args
-				argsSb.append(column.getTypeInJava()).append(" ")
-					.append(StringUtils.uncapitalize(column.getName()));
-				if(j != finder.getFinderColumns().size() -1) {
-					argsSb.append(", ");
-				}
-				
-				//finder sql
-				finderSqlSb.append(column.getName())
-							.append(" = ?");
-				if(j != finder.getFinderColumns().size() -1) {
-					finderSqlSb.append(" and ");
-				}else {
-					finderSqlSb.append("\"");
-				}
-				
-				//finder set sql
-				finderSetSqlSb.append("ps.set").append(column.getTypeInJava())
-							.append("(").append(j+1)
-							.append(",")
-							.append(" ")
-							.append(StringUtils.uncapitalize(column.getName()))
-							.append(");");
-				if(j != finder.getFinderColumns().size() -1) {
-					finderSetSqlSb.append("\r\t\t\t");
-				}
-			}
-			finderSqlSb.insert(0, READ_STATEMENT);
-			
-			String finderMethod = finderTemplate
-							.replace("${returnType}", returnType)
-							.replace("${methodName}", methodName)
-							.replace("${returnDeclare}", returnDecalre)
-							.replace("${args}", argsSb)
-							.replace("${finderSql}", finderSqlSb)
-							.replace("${finderSetSql}", finderSetSqlSb);
-			
-			finderMethodsSb.append(finderMethod);
-							
-		}
-		
-		return finderMethodsSb.toString();
-	}
-	
-	/**
-	 * update sql
-	 * @param entity
-	 * @param numOfFields
-	 * @return
-	 */
 	private static String getUpatetStatement(Entity entity, int numOfFields) {
 		List<Column> fields = entity != null ? entity.getColumns() : null;
 		if(fields == null || fields.isEmpty()) {
@@ -222,13 +123,6 @@ public class DaoImplGeneratorHelper {
 		
 		return updateStatementSb.toString();
 	}
-	
-	/**
-	 * update get data
-	 * @param entity
-	 * @param numOfFields
-	 * @return
-	 */
 	private static String getUpdateSetStatement(Entity entity, int numOfFields) {
 		List<Column> fields = entity != null ? entity.getColumns() : null;
 		if(fields == null || fields.isEmpty()) {
@@ -251,7 +145,7 @@ public class DaoImplGeneratorHelper {
 		}
 		setStatementSb.append("\r\t\t\t")
 		.append("ps.set")
-		.append(fields.get(0).getTypeInJava())
+		.append(TypeTransformEnum.getTypeByTypeInXml(DMConstants.DB_TYPE_MYSQL, fields.get(0).getType()).getTypeInJava())
 		.append("(")
 		.append(fields.size())
 		.append(", ")
@@ -263,8 +157,6 @@ public class DaoImplGeneratorHelper {
 	public static void generateDaoImpl(Builder builder) {
 		String template = GeneratorHelper.templateFileMap
 				.get(TemplateEnum.DAO_IMPL.getType());
-		String finderTemplate = GeneratorHelper.templateFileMap
-				.get(TemplateEnum.DAO_IMPL_FINDER.getType());
 		
 		List<Entity> entityList = builder.getEntities();
 		if (entityList != null && entityList.size() > 0) {
@@ -290,10 +182,8 @@ public class DaoImplGeneratorHelper {
 				String tableName = StringUtils.isNotBlank(entity.getTableName()) ?
 											entity.getTableName() 
 											: builder.getNameSpace() + "_" + entity.getName();
-				String finderMethods = getFinderStatement(entity, finderTemplate);
-											
+				
 				String outputTemplate = template
-						.replace("${finderByOtherFieldsMethods}", finderMethods)
 						.replace("${insertSql}", insertSql)
 						.replace("${insertSetStatement}", insertSetStatement)
 						.replace("${updateStatementSql}", updateSql)

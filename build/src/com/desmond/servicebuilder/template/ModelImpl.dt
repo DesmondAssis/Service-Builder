@@ -1,0 +1,16 @@
+package ${packageName};
+
+${imports}
+import com.desmond.servicebuilder.model.base.impl.BaseModelImpl;
+
+public class ${modelImpl} extends BaseModelImpl implements ${model}{
+	${privateFields}
+	${setterAndGetter}
+	
+	public ${model} mock${model}Impl() {
+		${model} ${modelVariable} = new ${model}Impl();
+		${mockSetValue}
+		
+		return ${modelVariable};
+	}
+}

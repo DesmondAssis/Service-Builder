@@ -8,17 +8,16 @@ public class Entity {
 	private String subPackageName;
 	private String packageName;
 	List<Column> columns;
-	List<Finder> finders;
 
 	public Entity() {
 		super();
 	}
 
-	public Entity(String name, String tableName, List<Column> columns, List<Finder> finders) {
+	public Entity(String name, String tableName, List<Column> columns) {
 		super();
 		this.name = name;
 		this.tableName = tableName;
-		this.finders = finders;
+		this.columns = columns;
 	}
 
 	/**
@@ -107,23 +106,15 @@ public class Entity {
 		this.columns = columns;
 	}
 
-	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return toString(true);
-	}
-
-	public String toString(boolean isTrue) {
-		StringBuilder resultSb = new StringBuilder();
-		String toString =  "Entity [name=" + name + ", tableName=" + tableName
+		StringBuilder resultSb 
+		= new StringBuilder("Entity [name=" + name + ", tableName=" + tableName
 				+ ", subPackageName=" + subPackageName + ", packageName="
-				+ packageName + ", columns=" + columns + ", finders=" + finders
-				+ "]\n";
-		
-		resultSb.append(toString);
+				+ packageName + ", columns=" + columns + "]:\n");
 		
 		if(this.getColumns() != null) {
 			for(Column column : this.getColumns()){
@@ -133,31 +124,8 @@ public class Entity {
 			}
 		}
 		
-		if(this.getFinders() != null) {
-			for(Finder finder : this.getFinders()){
-				resultSb.append("\t-------")
-						.append(finder.toString())
-						.append("\n");
-			}
-		}
-		
 		return resultSb.toString();
 	}
-
-	/**
-	 * Returns the finders of this Entity.
-	 * @return the finders
-	 */
-	public List<Finder> getFinders() {
-		return finders;
-	}
-
-	/**
-	 * Sets the finders of this Entity.
-	 * @param finders the finders to set
-	 */
-	public void setFinders(List<Finder> finders) {
-		this.finders = finders;
-	}
+	
 	
 }

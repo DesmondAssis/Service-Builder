@@ -1,8 +1,5 @@
 package com.desmond.servicebuilder.model.xml;
 
-import com.desmond.servicebuilder.util.constant.DMConstants;
-import com.desmond.servicebuilder.util.enums.TypeTransformEnum;
-
 /**
  * @author Presley
  * @date 22 May 2014 20:52:03
@@ -68,24 +65,6 @@ public class Column {
 	 */
 	public void setType(String type) {
 		this.type = type;
-	}
-	
-	public String getTypeInJava(int dbType) {
-		return TypeTransformEnum
-				.getTypeByTypeInXml(dbType, this.getType()).getTypeInJava();
-	}
-	
-	public String getTypeInJava() {
-		return this.getTypeInJava(DMConstants.DB_TYPE_MYSQL);
-	}
-	
-	public String getTypeInDb(int dbType) {
-		return TypeTransformEnum
-				.getTypeByTypeInXml(dbType, this.getType()).getTypeInDB();
-	}
-	
-	public String getTypeInDb() {
-		return this.getTypeInDb(DMConstants.DB_TYPE_MYSQL);
 	}
 
 	/**

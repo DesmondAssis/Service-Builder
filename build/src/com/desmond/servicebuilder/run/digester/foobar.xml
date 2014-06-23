@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<foo name="The Parent">
+	<bar id="123" title="The First Child" />
+	<bar id="456" title="The Second Child" />
+</foo>

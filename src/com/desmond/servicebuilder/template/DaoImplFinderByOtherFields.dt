@@ -1,0 +1,22 @@
+public ${returnType} findBy${methodName}(${args}){
+		${returnDeclare};
+		Connection conn = DButil.getConnection();
+		PreparedStatement ps = null;
+		String sql = ${finderSql};
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			${finderSetSql}
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				${model} ${modelVariable} = new ${model}Impl();
+				${selectStatementSetSql}
+				
+				${modelVariable}s.add(${modelVariable});
+			}
+		} catch (SQLException e) {
+			log.error("error when get ${User} by ${args} ", e);
+		}
+		
+		return ${modelVariable}s;
+}

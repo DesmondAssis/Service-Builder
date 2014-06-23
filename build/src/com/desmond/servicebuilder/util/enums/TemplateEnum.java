@@ -7,8 +7,7 @@ public enum TemplateEnum {
 	DAO_IMPL(3, "com/desmond/servicebuilder/template/DaoImpl.dt"),
 	SERVICE(4, ""),
 	SERVICE_IMPL(5, "com/desmond/servicebuilder/template/LocalServiceImpl.dt"),
-	SERVICE_BASE_IMPL(6, "com/desmond/servicebuilder/template/ServiceBaseImpl.dt"),
-	DAO_IMPL_FINDER(7, "com/desmond/servicebuilder/template/DaoImplFinderByOtherFields.dt");
+	SERVICE_BASE_IMPL(6, "com/desmond/servicebuilder/template/ServiceBaseImpl.dt");
 
 	private int type;
 	private String relativeURL;

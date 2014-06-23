@@ -84,8 +84,6 @@ public class ${daoImpl}{
 		return ${modelVariable};
 	}
 	
-	${finderByOtherFieldsMethods}
-	
 	public int delete(long primaryKey){
 		int update = 0;
 		Connection conn = DButil.getConnection();
