@@ -1,5 +1,7 @@
 package ${packageName};
 
+import ${entityPackage}.impl.dao.${model}DaoImpl;
+
 ${imports};
 
 public abstract class ${model}ServiceBaseImpl {

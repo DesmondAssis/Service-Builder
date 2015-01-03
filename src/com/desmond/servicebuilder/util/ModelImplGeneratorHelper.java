@@ -182,7 +182,7 @@ public class ModelImplGeneratorHelper {
 				importsSb.append("import " + modelName + ";\n");
 				String outputTemplate = template
 						.replace("${packageName}",
-								entity.getPackageName() + ".impl")
+								entity.getPackageName() + ".impl.model")
 						.replace("${imports}", importsSb.toString())
 						.replace(
 								"${modelImpl}",
@@ -202,14 +202,14 @@ public class ModelImplGeneratorHelper {
 						"/");
 				StringBuilder fileNameSb = new StringBuilder(
 						DMConstants.sourceDirectory);
-				fileNameSb.append(packageFileName).append("/").append("impl/")
+				fileNameSb.append(packageFileName).append("/").append("impl/model/")
 						.append(entity.getName()).append("Impl")
 						.append(".java");
 				
 				String outputBaseTemplate = baseTemplate
 						.replace("${package}",
 						entity.getPackageName());
-				String modelBaseFile = DMConstants.sourceDirectory + packageFileName + "/impl/base/BaseModelImpl.java";
+				String modelBaseFile = DMConstants.sourceDirectory + packageFileName + "/impl/model/base/BaseModelImpl.java";
 
 				// write to source file.
 				// model base

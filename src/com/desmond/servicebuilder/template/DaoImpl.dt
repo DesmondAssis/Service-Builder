@@ -10,6 +10,8 @@ import java.sql.Time;
 
 import org.apache.log4j.Logger;
 
+import ${entityPackage}.impl.model.${model}Impl;
+
 import ${package}.util.db.Counter;
 import ${package}.util.db.DBUtil;
 ${imports};

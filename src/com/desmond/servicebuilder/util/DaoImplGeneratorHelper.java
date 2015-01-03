@@ -294,6 +294,7 @@ public class DaoImplGeneratorHelper {
 											
 				String outputTemplate = template
 						.replace("${finderByOtherFieldsMethods}", finderMethods)
+						.replace("${entityPackage}", entity.getPackageName())
 						.replace("${insertSql}", insertSql)
 						.replace("${insertSetStatement}", insertSetStatement)
 						.replace("${updateStatementSql}", updateSql)
@@ -302,7 +303,7 @@ public class DaoImplGeneratorHelper {
 						.replace("${selectStatementSetSql}", readSetSql)
 						.replace("${deleteStatementSql}", deleteSql)
 						.replace("${packageName}",
-								entity.getPackageName() + ".impl")
+								entity.getPackageName() + ".impl.dao")
 						.replace("${imports}", importsSb.toString())
 						.replace("${model}",
 								StringUtils.capitalize(entity.getName()))
@@ -317,7 +318,7 @@ public class DaoImplGeneratorHelper {
 						"/");
 				StringBuilder fileNameSb = new StringBuilder(
 						DMConstants.sourceDirectory);
-				fileNameSb.append(packageFileName).append("/").append("impl/")
+				fileNameSb.append(packageFileName).append("/").append("impl/dao/")
 						.append(entity.getName()).append("DaoImpl.java");
 				
 				//log.info(packageFileName);

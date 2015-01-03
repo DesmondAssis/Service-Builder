@@ -12,18 +12,18 @@
 		<column name="name" type="String" />
 	</entity>
 	
-	<!-- <entity name="MigrateEntry" sub-package-path="mg">
-        PK fields
+	<entity name="MigrateEntry" sub-package-path="mg">
+        <!-- PK fields -->
 		<column name="sourceId" type="long" primary="true" auto-increment="false"/>
 		
-		Audit fields
+		<!-- Audit fields -->
 
 		<column name="createdDate" type="Time" />
 		<column name="modifiedDate" type="Time" />
 
-		Foreign Key fields
+		<!-- Foreign Key fields -->
 		
-		Other fields
+		<!-- Other fields -->
 		<column name="migrateTypeId" type="String" not-null="true" unique="true" />
 		<column name="gorupId" type="String" />
 		<column name="migrateProviderId" type="String" />
@@ -35,25 +35,14 @@
 		<column name="question" type="String" />
 		<column name="answer" type="String" />
 		
-		Order
+		<!-- Order -->
 		
-		Finder methods
-		<finder name="StatsGameId" return-type="Collection">
-			<finder-column name="statsGameId" />
+		<!-- Finder methods -->
+		<finder name="ClassNamePK" return-type="Collection">
+			<finder-column name="classnameId" />
+			<finder-column name="classPK" />
 		</finder>
-		
-		<finder name="ScheduleId" return-type="Collection">
-			<finder-column name="scheduleId" />
-		</finder>
-		
-		<finder name="Sport" return-type="Collection">
-			<finder-column name="sport" />
-		</finder>
-		
-		<finder name="Date" return-type="Collection">
-			<finder-column name="date" />
-		</finder>
-    </entity> -->
+    </entity>
     
 	<database>
 		<jdbcurl>jdbc:mysql://localhost:3306/liferay?useUnicode=true&amp;characterEncoding=UTF-8</jdbcurl>

@@ -27,7 +27,8 @@ public class ServiceImplGeneratorHelper {
 				
 				String outputTemplate = template
 						.replace("${packageName}",
-								entity.getPackageName() + ".impl")
+								entity.getPackageName() + ".impl.service")
+					    .replace("${entityPackage}", entity.getPackageName())
 						.replace("${imports}", importsSb.toString())
 						.replace("${model}", entity.getName())
 						.replace("${modelVariable}", StringUtils.uncapitalize(entity.getName()))
@@ -37,7 +38,7 @@ public class ServiceImplGeneratorHelper {
 						"/");
 				StringBuilder fileNameSb = new StringBuilder(
 						DMConstants.sourceDirectory);
-				fileNameSb.append(packageFileName).append("/").append("impl/")
+				fileNameSb.append(packageFileName).append("/").append("impl/service/")
 						.append(entity.getName()).append("ServiceBaseImpl.java");
 				
 				//log.info(template);
@@ -59,7 +60,7 @@ public class ServiceImplGeneratorHelper {
 						"/");
 				StringBuilder fileNameSb = new StringBuilder(
 						DMConstants.sourceDirectory);
-				fileNameSb.append(packageFileName).append("/").append("impl/")
+				fileNameSb.append(packageFileName).append("/").append("impl/service/")
 						.append(entity.getName()).append("LocalServiceImpl.java");
 				File file = new File(fileNameSb.toString());
 				
@@ -67,7 +68,7 @@ public class ServiceImplGeneratorHelper {
 					StringBuilder importsSb = new StringBuilder();
 					String outputTemplate = template
 							.replace("${packageName}",
-									entity.getPackageName() + ".impl")
+									entity.getPackageName() + ".impl.service")
 							.replace("${imports}", importsSb.toString())
 							.replace("${model}", entity.getName());
 					

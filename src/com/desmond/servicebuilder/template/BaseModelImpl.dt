@@ -1,4 +1,4 @@
-package ${package}.impl.base;
+package ${package}.impl.model.base;
 
 import java.sql.Timestamp;
 
