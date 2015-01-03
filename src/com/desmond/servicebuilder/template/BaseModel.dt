@@ -1,4 +1,4 @@
-package com.desmond.servicebuilder.model.base.intf;
+package ${packageName};
 		
 
 import java.sql.Time;

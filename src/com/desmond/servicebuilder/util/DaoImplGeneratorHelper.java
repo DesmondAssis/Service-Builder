@@ -310,6 +310,7 @@ public class DaoImplGeneratorHelper {
 						.replace("${modelVariable}", StringUtils.uncapitalize(entity.getName()))
 						.replace("${daoImpl}", entity.getName() + "DaoImpl")
 						.replace("${table_name}", tableName)
+						.replace("${package}", builder.getPackateName());
 								;
 
 				String packageFileName = entity.getPackageName().replace(".",

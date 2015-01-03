@@ -19,7 +19,7 @@ import com.desmond.servicebuilder.util.enums.TypeTransformEnum;
 public class ModelImplGeneratorHelper {
 	private static Logger log = Logger.getLogger(ModelImplGeneratorHelper.class.getName());
 	
-	public static void generateModelAndImpl(Builder builder) {
+	public static void generate(Builder builder) {
 		// model
 		generateModel(builder);
 		
@@ -28,6 +28,7 @@ public class ModelImplGeneratorHelper {
 	}
 	
 	private static void generateModel(Builder builder) {
+		String baseTemplate = GeneratorHelper.templateFileMap.get(TemplateEnum.MODEL_BASE.getType());
 		String template = GeneratorHelper.templateFileMap
 				.get(TemplateEnum.MODEL.getType());
 
@@ -82,22 +83,34 @@ public class ModelImplGeneratorHelper {
 								StringUtils.capitalize(entity.getName()))
 						.replace("${setterAndGetter}",
 								setterAndGetterSb.toString());
+				
+				String outputBaseTemplate = baseTemplate
+						.replace("${packageName}",
+						entity.getPackageName() + ".intf.base");
 
 				String packageFileName = entity.getPackageName().replace(".",
 						"/");
 				StringBuilder fileNameSb = new StringBuilder(
 						DMConstants.sourceDirectory);
+				String modelBaseFile = fileNameSb.toString() + packageFileName + "/intf/base/BaseModel.java";
 				fileNameSb.append(packageFileName).append("/").append("intf/")
 						.append(entity.getName()).append(".java");
 
 				// write to source
+				// model base;
+				GeneratorHelper
+				.writeToDestFile(outputBaseTemplate, modelBaseFile);
+				
+				// models
 				GeneratorHelper
 						.writeToDestFile(outputTemplate, fileNameSb.toString());
+				
 			} // end:entity
 		}
 	}
 
 	private static void generateModelImpl(Builder builder) {
+		String baseTemplate = GeneratorHelper.templateFileMap.get(TemplateEnum.MODEL_BASE_IMPL.getType());
 		String template = GeneratorHelper.templateFileMap
 				.get(TemplateEnum.MODEL_IMPL.getType());
 
@@ -192,8 +205,18 @@ public class ModelImplGeneratorHelper {
 				fileNameSb.append(packageFileName).append("/").append("impl/")
 						.append(entity.getName()).append("Impl")
 						.append(".java");
+				
+				String outputBaseTemplate = baseTemplate
+						.replace("${package}",
+						entity.getPackageName());
+				String modelBaseFile = DMConstants.sourceDirectory + packageFileName + "/impl/base/BaseModelImpl.java";
 
 				// write to source file.
+				// model base
+				GeneratorHelper
+				.writeToDestFile(outputBaseTemplate, modelBaseFile);
+				
+				// models
 				GeneratorHelper
 						.writeToDestFile(outputTemplate, fileNameSb.toString());
 			} // end: entity

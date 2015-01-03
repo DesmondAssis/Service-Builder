@@ -6,17 +6,20 @@ public class Builder {
 	private String packateName;
 	private String author;
 	private String nameSpace;
+	private Database database;
 	private List<Entity> entities;
-	
+
 	public Builder() {
 		super();
 	}
 
-	public Builder(String packateName, String author, String nameSpace, List<Entity> entities) {
+	public Builder(String packateName, String author, String nameSpace,
+			Database database, List<Entity> entities) {
 		super();
 		this.packateName = packateName;
 		this.author = author;
 		this.nameSpace = nameSpace;
+		this.database = database;
 		this.entities = entities;
 	}
 
@@ -79,6 +82,7 @@ public class Builder {
 
 	/**
 	 * Returns the entities of this Builder.
+	 * 
 	 * @return the entities
 	 */
 	public List<Entity> getEntities() {
@@ -87,30 +91,43 @@ public class Builder {
 
 	/**
 	 * Sets the entities of this Builder.
-	 * @param entities the entities to set
+	 * 
+	 * @param entities
+	 *            the entities to set
 	 */
 	public void setEntities(List<Entity> entities) {
 		this.entities = entities;
 	}
 
-	/* (non-Javadoc)
+	public Database getDatabase() {
+		return database;
+	}
+
+	public void setDatabase(Database database) {
+		this.database = database;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		StringBuilder resultSb = new StringBuilder(
-				"Builder [packateName=" + packateName + ", author=" + author
-				+ ", nameSpace=" + nameSpace + ", entities"  +":\n");
-		
-		if(this.getEntities() != null) {
-			for(Entity entity : this.getEntities()){
-				resultSb.append("-------")
-						.append(entity.toString())
+		StringBuilder resultSb = new StringBuilder("Builder [packateName="
+				+ packateName + ", author=" + author + ", nameSpace="
+				+ nameSpace
+				+ ", database meta: " + database
+				+ ", entities" + ":\n");
+
+		if (this.getEntities() != null) {
+			for (Entity entity : this.getEntities()) {
+				resultSb.append("-------").append(entity.toString())
 						.append("\n");
 			}
 		}
-		
+
 		return resultSb.toString();
 	}
-	
+
 }

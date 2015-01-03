@@ -1,4 +1,4 @@
-package com.desmond.servicebuilder.util.db;
+package ${package}.util.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,14 +8,14 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 
-public class DButil {
-	private static String url = "jdbc:mysql://localhost:3306/ecommerce?useUnicode=true&amp;characterEncoding=UTF-8";
-	private static String user = "root";
-	private static String pwd = "root";
-	private static String driverClass = "com.mysql.jdbc.Driver";
+public class DBUtil {
+	private static String url = "${jdbcurl}";
+	private static String user = "${user}";
+	private static String pwd = "${password}";
+	private static String driverClass = "${driverClass}";
 	private static Connection conn = null;
-	
-	private static Logger log = Logger.getLogger(DButil.class.getName());
+
+	private static Logger log = Logger.getLogger(DBUtil.class.getName());
 
 	public static Connection getConnection() {
 		try {
@@ -86,7 +86,7 @@ public class DButil {
 	}
 
 	public void setDriverClass(String driverClass) {
-		DButil.driverClass = driverClass;
+		DBUtil.driverClass = driverClass;
 	}
 
 	public Connection getConn() {

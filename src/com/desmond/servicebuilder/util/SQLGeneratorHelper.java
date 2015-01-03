@@ -38,6 +38,8 @@ public class SQLGeneratorHelper {
     			String tableName = StringUtils.isNotBlank(entity.getTableName()) ?
 						entity.getTableName() 
 						: builder.getNameSpace() + "_" + entity.getName();
+				
+				tableSb.append(SQLStatementConstant.DROP_TABLE_IF_EXIST).append(tableName).append(";\n");
     			tableSb.append(SQLStatementConstant.CREATE_TABLE_PREFIX.replace("${table-name}", tableName));
     			
     			if(columnList != null && columnList.size() > 0) {

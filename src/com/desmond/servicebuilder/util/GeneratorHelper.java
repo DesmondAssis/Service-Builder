@@ -23,6 +23,7 @@ import org.jdom2.input.SAXBuilder;
 import com.desmond.servicebuilder.DesmondXMLConstant;
 import com.desmond.servicebuilder.model.xml.Builder;
 import com.desmond.servicebuilder.model.xml.Column;
+import com.desmond.servicebuilder.model.xml.Database;
 import com.desmond.servicebuilder.model.xml.Entity;
 import com.desmond.servicebuilder.model.xml.Finder;
 import com.desmond.servicebuilder.model.xml.FinderColumn;
@@ -35,6 +36,9 @@ public class GeneratorHelper {
 	public static Map<Integer, String> templateFileMap = new HashMap<Integer, String>();
 	public static Map<String, String> filedsExcludeMap = new HashMap<String, String>();
 	
+	/*
+	 * initial
+	 */
 	static {
 		for(TemplateEnum en : TemplateEnum.values()) {
     		String source = GeneratorHelper.getServiceFileAsString(en.getRelativeURL());
@@ -46,37 +50,62 @@ public class GeneratorHelper {
 		filedsExcludeMap.put("modifiedDate", "modifiedDate");
 	}
 	
-	private static void mkDir(String fullPath, String directoryPath) {
+	private static void mkDir(String preDir, String directoryPath) {
 		String[] dirctories = directoryPath.split("/");
-		if(dirctories == null || dirctories.length <= 1) {
+		if(dirctories != null && dirctories.length == 1) {
+			// all dirs were made done. just leave the file.
 			return;
 		}
-		File directory = new File(fullPath.substring(0, fullPath.indexOf("/" + dirctories[0] + "/") + dirctories[0].length() + 1));
+		
+		preDir = StringUtils.isBlank(preDir) ? "" : preDir.endsWith("\\") ? preDir.replace("\\", "/") : preDir + "/";
+		File directory = new File(preDir + dirctories[0]);
 //		log.info(directory);
 		if(!directory.exists()) {
 			directory.mkdir();
 		} else if(!directory.isDirectory()) {
 			directory.delete();
 			directory.mkdir();
+			
 		}
+		preDir = directory.getPath();
 		int index = directoryPath.indexOf("/");
 		String dirctoryStr = index != -1 ? directoryPath.substring(index+1, directoryPath.length()) : "";
-		mkDir(fullPath, dirctoryStr);
+		
+		mkDir(preDir, dirctoryStr);
 	}
 	
-//	public static void main(String[] args) {
-//		String destPath = "C:/Users/Presley/Desktop/test/test01/test02/test03/java/a.java";
-//		mkDir(destPath, destPath);
-//	}
+	public static void main(String[] args) {
+		String test = "L:/Users/Presley/Desktop/test/test01/test02/test03/test01/java/a.java";
+		String destPath = "L:/Users/Presley/Desktop/test/test01/test02/test03/test01/java/a.java";
+		mkDir("", destPath);
+		File f = new File(test);
+		
+		BufferedWriter bw = null;
+		try {
+			bw = new BufferedWriter(new FileWriter(f));
+			bw.write("Hello, world");
+			bw.flush();
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//log.info(sourceFileStr);
+		
+
+		log.info(f.exists());
+	}
 	
 	public static void writeToDestFile(String sourceFileStr, String destdile) {
     	try {
-    		mkDir(destdile, destdile);
+    		
+    		mkDir("", destdile);
     		
     		BufferedWriter bw = new BufferedWriter(new FileWriter(destdile));
     		//log.info(sourceFileStr);
 			bw.write(sourceFileStr);
 			bw.flush();
+			bw.close();
 			log.info("generate: " + destdile);
 		} catch (FileNotFoundException e) {
 			log.error("error", e);
@@ -123,6 +152,16 @@ public class GeneratorHelper {
 			builder.setPackateName(packageName);
 			builder.setAuthor(authorValue);
 			builder.setNameSpace(nspValue);
+			
+			// database
+			Element databaseEle = root.getChild(DesmondXMLConstant.DATABASE);
+			Database db = new Database(
+					databaseEle.getChildTextTrim(DesmondXMLConstant.JDBC_URL),
+					databaseEle.getChildTextTrim(DesmondXMLConstant.USERNAME),
+					databaseEle.getChildTextTrim(DesmondXMLConstant.PASSWORD),
+					databaseEle.getChildTextTrim(DesmondXMLConstant.DRIVER_CLASS)
+					);
+			builder.setDatabase(db);
 
 			List<Element> elementEntityList = root
 					.getChildren(DesmondXMLConstant.ENTITY);

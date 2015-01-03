@@ -16,6 +16,7 @@ import com.desmond.servicebuilder.util.GeneratorHelper;
 import com.desmond.servicebuilder.util.ModelImplGeneratorHelper;
 import com.desmond.servicebuilder.util.SQLGeneratorHelper;
 import com.desmond.servicebuilder.util.ServiceImplGeneratorHelper;
+import com.desmond.servicebuilder.util.UtilsGeneratorHelper;
 import com.desmond.servicebuilder.util.constant.DMConstants;
 
 public class Run {
@@ -35,13 +36,18 @@ public class Run {
 		log.info(builder);
 		
 		// delete old files.
-		//String directory = DMConstants.sourceDirectory + StringUtils.replace(builder.getPackateName(), ".", "/");
-		//log.info("deleting " + directory + "...");
-		//File dir = new File(directory);
-		//FileUtils.deleteDirectory(dir);
+		String directory = DMConstants.sourceDirectory + StringUtils.replace(builder.getPackateName(), ".", "/");
+		log.info("deleting " + directory + "...");
+		File dir = new File(directory);
+		if(dir.exists()) {			
+			FileUtils.deleteDirectory(dir);
+		}
 		
 		// generate model.
-		ModelImplGeneratorHelper.generateModelAndImpl(builder);
+		ModelImplGeneratorHelper.generate(builder);
+		
+		// generate utils.
+		UtilsGeneratorHelper.generateModelAndImpl(builder);
 		
 		// generate dao.
 		DaoImplGeneratorHelper.generateDaoImpl(builder);

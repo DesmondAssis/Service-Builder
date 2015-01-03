@@ -1,6 +1,6 @@
 public ${returnType} findBy${methodName}(${args}){
 		${returnDeclare};
-		Connection conn = DButil.getConnection();
+		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		String sql = ${finderSql};
 		ResultSet rs = null;

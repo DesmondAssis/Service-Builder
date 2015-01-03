@@ -10,15 +10,15 @@ import java.sql.Time;
 
 import org.apache.log4j.Logger;
 
-import com.desmond.servicebuilder.util.db.Counter;
-import com.desmond.servicebuilder.util.db.DButil;
+import ${package}.util.db.Counter;
+import ${package}.util.db.DBUtil;
 ${imports};
 
 public class ${daoImpl}{
 	
 	public int add(${model} ${modelVariable}) {
 		int update = 0;
-		Connection conn = DButil.getConnection();
+		Connection conn = DBUtil.getConnection();
 		long nextPrimaryKey = Counter.getPrimaryKey(${model}.class.getName(), conn);
 		
 		PreparedStatement ps = null;
@@ -35,7 +35,7 @@ public class ${daoImpl}{
 		} catch(SQLException e) {
 			log.error("error when insert", e);
 		} finally {
-			DButil.close(conn, ps);
+			DBUtil.close(conn, ps);
 		}
 		
 		return update;
@@ -43,7 +43,7 @@ public class ${daoImpl}{
 	
 	public int update(${model} ${modelVariable}){
 		int update=0;
-		Connection conn = DButil.getConnection();
+		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps=null;
 		String sql = ${updateStatementSql}
 		try {
@@ -57,7 +57,7 @@ public class ${daoImpl}{
 		} catch (SQLException e) {
 			log.error("error when update.", e);
 		}finally{
-			DButil.close(conn, ps);
+			DBUtil.close(conn, ps);
 		}
 		
 		return update;
@@ -65,7 +65,7 @@ public class ${daoImpl}{
 	
 	public ${model} fetchByPrimaryKey(long primaryKey){
 		${model} ${modelVariable} = null;
-		Connection conn = DButil.getConnection();
+		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		String sql = ${selectStatementSql};
 		ResultSet rs = null;
@@ -88,7 +88,7 @@ public class ${daoImpl}{
 	
 	public int delete(long primaryKey){
 		int update = 0;
-		Connection conn = DButil.getConnection();
+		Connection conn = DBUtil.getConnection();
 		PreparedStatement ps = null;
 		String sql = ${deleteStatementSql};
 		
@@ -99,7 +99,7 @@ public class ${daoImpl}{
 		} catch (SQLException e) {
 			log.error("error when delete", e);
 		}finally{
-			DButil.close(conn, ps);
+			DBUtil.close(conn, ps);
 		}
 		
 		return update;

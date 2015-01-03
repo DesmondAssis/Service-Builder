@@ -8,7 +8,15 @@ public enum TemplateEnum {
 	SERVICE(4, ""),
 	SERVICE_IMPL(5, "com/desmond/servicebuilder/template/LocalServiceImpl.dt"),
 	SERVICE_BASE_IMPL(6, "com/desmond/servicebuilder/template/ServiceBaseImpl.dt"),
-	DAO_IMPL_FINDER(7, "com/desmond/servicebuilder/template/DaoImplFinderByOtherFields.dt");
+	DAO_IMPL_FINDER(7, "com/desmond/servicebuilder/template/DaoImplFinderByOtherFields.dt"),
+	
+	// model base
+	MODEL_BASE(8, "com/desmond/servicebuilder/template/BaseModel.dt"),
+	MODEL_BASE_IMPL(9, "com/desmond/servicebuilder/template/BaseModelImpl.dt"),
+	
+	// util
+	COUNTER(10, "com/desmond/servicebuilder/template/Counter.dt"),
+	DB_UTIL(11, "com/desmond/servicebuilder/template/DBUtil.dt");
 
 	private int type;
 	private String relativeURL;

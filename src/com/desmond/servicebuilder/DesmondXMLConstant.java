@@ -5,6 +5,15 @@ public interface DesmondXMLConstant {
 	String PACKAGE_NAME = "package-path";
 	String AUTHOR = "author";
 	String NAMESPACE = "namespace";
+	
+	// database
+	String DATABASE = "database";
+	String JDBC_URL = "jdbcurl";
+	String USERNAME = "user";
+	String PASSWORD = "password";
+	String DRIVER_CLASS = "driverClass";
+	
+	// entity
 	String ENTITY = "entity";
 	String NAME = "name";
 	String TABLE_NAME = "table-Name";
