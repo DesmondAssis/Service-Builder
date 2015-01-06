@@ -63,7 +63,7 @@ public class DaoImplGeneratorHelper {
 			Column field = fields.get(i);
 			setStatementSb.append("\r\t\t\t")
 							.append("ps.set")
-							.append(StringUtils.capitalize(field.getType()))
+							.append(StringUtils.capitalize(TypeTransformEnum.getJavaTypeByTypeInXml(field.getType())))
 							.append("(")
 							.append(i+1)
 							.append(", ")
@@ -240,7 +240,7 @@ public class DaoImplGeneratorHelper {
 			Column field = fields.get(i);
 			setStatementSb.append("\r\t\t\t")
 							.append("ps.set")
-							.append(StringUtils.capitalize(field.getType()))
+							.append(StringUtils.capitalize(TypeTransformEnum.getJavaTypeByTypeInXml(field.getType())))
 							.append("(")
 							.append(i)
 							.append(", ")

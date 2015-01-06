@@ -9,7 +9,9 @@ public enum TypeTransformEnum {
 	DOUBLE(DMConstants.DB_TYPE_MYSQL, "double", "double", "DOUBLE"),
 	BOOLEAN(DMConstants.DB_TYPE_MYSQL, "boolean", "boolean", "TINYINT"),
 	STRING(DMConstants.DB_TYPE_MYSQL, "String", "String", "VARCHAR(75)"),
-	TIME(DMConstants.DB_TYPE_MYSQL, "Time", "Timestamp", "TIMESTAMP");
+	STRING2(DMConstants.DB_TYPE_MYSQL, "String2", "String", "VARCHAR(300)"),
+	CLOB(DMConstants.DB_TYPE_MYSQL, "Clob", "String", "LONGTEXT"),
+	TIMESTAMP(DMConstants.DB_TYPE_MYSQL, "Timestamp", "Timestamp", "TIMESTAMP");
 	
 	private int dbType;
 	private String typeInXml;
@@ -43,6 +45,20 @@ public enum TypeTransformEnum {
 		return TypeTransformEnum.INVALID;
 	}
 	
+	public static String getJavaTypeByTypeInXml(String typeInXml) {
+		return TypeTransformEnum.getJavaTypeByTypeInXml(DMConstants.DB_TYPE_MYSQL, typeInXml);
+	}
+	
+	public static String getJavaTypeByTypeInXml(int db, String typeInXml) {
+		for(TypeTransformEnum type : TypeTransformEnum.values()) {
+			if(db == type.getDbType() && typeInXml.equals(type.getTypeInXml())) {
+				return type.getTypeInJava();
+			}
+		}
+		
+		return TypeTransformEnum.INVALID.getTypeInJava();
+	}
+	
 	public static TypeTransformEnum getTypeByTypeInXml(int db, String typeInXml) {
 		for(TypeTransformEnum type : TypeTransformEnum.values()) {
 			if(db == type.getDbType() && typeInXml.equals(type.getTypeInXml())) {
@@ -57,12 +73,15 @@ public enum TypeTransformEnum {
 		for(TypeTransformEnum type : TypeTransformEnum.values()) {
 			if(db == type.getDbType() && typeInXml.equals(type.getTypeInXml())) {
 				switch(type) {
-				case LONG:return "Math.round(10000)";
+				case LONG:return "Math.round(10000d)";
 				case INT:return "Math.round(100)";
 				case DOUBLE:return "Math.rint(100)";
 				case BOOLEAN:return "false";
 				case STRING: return "\"" + name + "\" + " + "Math.round(100000000)";
-				case TIME: return "new java.sql.Timestamp(new java.util.Date().getTime())";
+				case STRING2: return "\"" + name + "\" + " + "Math.round(100000000)";
+				case TIMESTAMP: return "new java.sql.Timestamp(new java.util.Date().getTime())";
+				case CLOB: return "\"" + name + "\" + " + "Math.round(100000000)";
+				
 				
 				}
 			}

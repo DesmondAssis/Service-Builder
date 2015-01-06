@@ -53,22 +53,23 @@ public class ModelImplGeneratorHelper {
 									&& !flagMap.containsKey("Date")) {
 								importsSb.append("import java.util.Date;\n");
 								flagMap.put("Date", "");
-							} else if (c.getType().equals("Time")
-									&& !flagMap.containsKey("Time")) {
+							} else if (c.getType().equals("Timestamp")
+									&& !flagMap.containsKey("Timestamp")) {
 								importsSb.append("import java.sql.Timestamp;\n");
-								flagMap.put("Time", "");
+								flagMap.put("Timestamp", "");
 							}
 
 							// getter
 							setterAndGetterSb.append("\r\tpublic ")
-									.append(c.getType()).append(" get")
+									.append(TypeTransformEnum.getJavaTypeByTypeInXml(c.getType())).append(" get")
 									.append(nameCapitalition).append("(")
 									.append(");").append("\r\n");
 
 							// setter
 							setterAndGetterSb.append("\r\tpublic ").append("void")
 									.append(" set").append(nameCapitalition)
-									.append("(").append(c.getType()).append(" ")
+									.append("(").append(TypeTransformEnum.getJavaTypeByTypeInXml(c.getType()))
+									.append(" ")
 									.append(nameUnCapitalition).append(");")
 									.append("\r\n");
 						} 
@@ -136,20 +137,20 @@ public class ModelImplGeneratorHelper {
 									&& !flagMap.containsKey("Date")) {
 								importsSb.append("import java.util.Date;\n");
 								flagMap.put("Date", "");
-							} else if (c.getType().equals("Time")
-									&& !flagMap.containsKey("Time")) {
-								importsSb.append("import java.sql.Time;\n");
-								flagMap.put("Time", "");
+							} else if (c.getType().equals("Timestamp")
+									&& !flagMap.containsKey("Timestamp")) {
+								importsSb.append("import java.sql.Timestamp;\n");
+								flagMap.put("Timestamp", "");
 							}
 
 							// private fields
 							privateFieldsSb.append("\r\tprivate ")
-									.append(c.getType()).append(" ")
+									.append(TypeTransformEnum.getJavaTypeByTypeInXml(c.getType())).append(" ")
 									.append(c.getName()).append(";").append("\r\n");
 
 							// getter
 							setterAndGetterSb.append("\r\tpublic ")
-									.append(c.getType()).append(" get")
+									.append(TypeTransformEnum.getJavaTypeByTypeInXml(c.getType())).append(" get")
 									.append(nameCapitalition).append("(")
 									.append(") {").append("\r\t\treturn ")
 									.append(c.getName()).append(";")
@@ -158,7 +159,8 @@ public class ModelImplGeneratorHelper {
 							// setter
 							setterAndGetterSb.append("\r\tpublic ").append("void")
 									.append(" set").append(nameCapitalition)
-									.append("(").append(c.getType()).append(" ")
+									.append("(").append(TypeTransformEnum.getJavaTypeByTypeInXml(c.getType()))
+									.append(" ")
 									.append(nameUnCapitalition).append(") {")
 									.append("\r\t\tthis.")
 									.append(nameUnCapitalition).append(" = ")

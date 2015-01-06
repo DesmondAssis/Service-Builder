@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<desmond-builder package-path="com.desmond.datamigrate.ge">
+	<author>Presley</author>
+	<namespace>migrate</namespace>
+	
+	<entity name="MigrateType" sub-package-path="mg">
+		<column name="migrateTypeId" type="long" primary="true" auto-increment="false" />
+		
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+		
+		<column name="name" type="String" />
+	</entity>
+	
+	<entity name="MigrateEntry" sub-package-path="mg">
+        <!-- PK fields -->
+		<column name="sourceId" type="long" primary="true" auto-increment="false"/>
+		
+		<!-- Audit fields -->
+
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Foreign Key fields -->
+		
+		<!-- Other fields -->
+		<column name="migrateTypeId" type="String" not-null="true" unique="true" />
+		<column name="gorupId" type="String" />
+		<column name="migrateProviderId" type="String" />
+		<column name="classPK" type="String" />
+		<column name="properties" type="String" />
+		<column name="classnameId" type="String" unique="true" />
+		<column name="address" type="String" />
+		<column name="phone" type="String" />
+		<column name="question" type="String" />
+		<column name="answer" type="String" />
+		
+		<!-- Order -->
+		
+		<!-- Finder methods -->
+		<finder name="ClassNamePK" return-type="Collection">
+			<finder-column name="classnameId" />
+			<finder-column name="classPK" />
+		</finder>
+    </entity>
+    
+    
+    
+    
+	
+	<entity name="MigrateStatus" local-service="true" remote-service="false"  sub-package-path="mg">
+		<!-- PK fields -->
+		<column name="migrateStatusId" type="int" primary="true" id-type="assigned" />
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+		
+		<column name="name" type="String" />
+		
+		<!-- Finder methods -->
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
+	</entity>
+
+	<entity name="MigrateServer" local-service="true" remote-service="false"  sub-package-path="mg" cache-enabled="false">
+		<!-- PK fields -->
+		<column name="serverId" type="long" primary="true" id-type="assigned" />
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+		
+		<column name="name" type="String"  />
+		<column name="workerCount" type="int" />
+
+		<column name="enabled" type="boolean" />
+		<!-- Other fields -->
+
+		<!-- Order -->
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+	</entity>
+
+	<entity name="MigrateProvider" local-service="true"  sub-package-path="mg" remote-service="false" cache-enabled="false">
+		<!-- PK fields -->
+		<column name="migrateProviderId" type="long" primary="true" id-type="assigned" />
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Other fields -->
+		<column name="name" type="String" />
+		<column name="description" type="String" />
+		<column name="factoryClass" type="String" />
+		<column name="parameters" type="String" />
+		<column name="createdBy" type="String" />
+		<column name="modifiedBy" type="String" />
+		
+		<!-- Order -->
+		<order by="desc">
+			<order-column name="name" />
+		</order>
+		
+		<!-- Finder methods -->
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	
+	<entity name="MigrateBatch" local-service="true"  sub-package-path="mg" remote-service="false" cache-enabled="false">
+		<!-- PK fields -->
+		<column name="migrateBatchId" type="long" primary="true" id-type="assigned" />
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />
+
+		<!-- Other fields -->
+		<column name="migrateProviderId" type="long" />
+		<column name="groupId" type="long" />
+		<column name="groupName" type="String" />
+		<column name="migrateStatusId" type="int" />
+		<column name="name" type="String" />
+		<column name="parameters" type="String" />
+
+		<column name="server" type="String" />
+		<column name="totalCount" type="long" />
+		<column name="successCount" type="long" />
+		<column name="failureCount" type="long" />
+		<column name="note" type="String" />
+		<column name="createdBy" type="long" />
+		<column name="modifiedBy" type="long" />
+
+		<!-- Order -->
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+		
+		
+	</entity>
+	
+	<entity name="MigrateTask" local-service="true"  sub-package-path="mg" remote-service="false" cache-enabled="false" >
+		<!-- PK fields -->
+		<column name="migrateTaskId" type="long" primary="true" id-type="assigned" />
+		<column name="createdDate" type="Time" />
+		<column name="modifiedDate" type="Time" />r
+		
+		<!-- Other fields -->
+		<column name="migrateBatchId" type="long" />
+		<column name="sourceId" type="long" />
+		<column name="migrateTypeId" type="int" />
+		<column name="name" type="String" />
+		<column name="priority" type="int"/>
+		<column name="migrateStatusId" type="int" />
+		
+		<column name="elapsedMillisec" type="long" />
+		<column name="result" type="String" />
+		<column name="server" type="String" />
+		
+		<column name="successCount" type="int" />
+		<column name="failureCount" type="int" />
+		
+		<column name="createdBy" type="long" />
+		<column name="modifiedBy" type="long" />
+		
+		<!-- Finder methods -->
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
+		
+		<finder name="BatchStatusId" return-type="Collection">
+			<finder-column name="migrateStatusId" />
+			<finder-column name="migrateBatchId" />
+		</finder>
+		
+		<finder name="MigrateBatchId" return-type="Collection">
+			<finder-column name="migrateBatchId" />
+		</finder>
+	</entity>
+	
+	<entity name="MigrateTaskLog" local-service="true"  sub-package-path="mg" remote-service="false" cache-enabled="false" >
+		<!-- PK fields -->
+		<column name="migrateTaskLogId" type="long" primary="true" id-type="assigned" />
+		
+		<!-- Other fields -->
+		<column name="migrateTaskId" type="long" />
+		<column name="sourceId" type="long" />
+		<column name="type_" type="int" />
+		<column name="statusId" type="int" />
+		<column name="elapsedMillisec" type="long" />
+		<column name="successCount" type="int" />
+		<column name="failureCount" type="int" />
+		<column name="result" type="String" />
+		
+		<!-- Finder methods -->
+		<finder name="MigrateTaskId" return-type="Collection">
+			<finder-column name="migrateTaskId" />
+		</finder>
+		<finder name="T_S_T" return-type="Collection">
+			<finder-column name="migrateTaskId" />
+			<finder-column name="sourceId" />
+			<finder-column name="type_" />
+		</finder>
+	</entity>
+	
+	<entity name="MigrateDataSource" local-service="true"  sub-package-path="mg" remote-service="false" cache-enabled="false">
+		<!-- PK fields -->
+		<column name="dataSourceId" type="long" primary="true" id-type="assigned" />
+
+		<!-- Other fields -->
+		<column name="serverName" type="String" />
+		<column name="jdbcURL" type="String" />
+		<column name="userName" type="String" />
+		<column name="password" type="String" />
+
+	</entity>
+    
+	<database>
+		<jdbcurl>jdbc:mysql://localhost:3306/liferay?useUnicode=true&amp;characterEncoding=UTF-8</jdbcurl>
+		<user>root</user>
+		<password>root</password>
+		<driverClass>com.mysql.jdbc.Driver</driverClass>
+	</database>
+</desmond-builder>

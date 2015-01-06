@@ -1,48 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<desmond-builder package-path="com.desmond.datamigrate.ge">
+<desmond-builder package-path="com.desmond.article.ge">
 	<author>Presley</author>
-	<namespace>migrate</namespace>
+	<namespace>art</namespace>
 	
-	<entity name="MigrateType" sub-package-path="mg">
-		<column name="migrateTypeId" type="long" primary="true" auto-increment="false" />
+	<entity name="Article" sub-package-path="mg">
+		<column name="articleId" type="long" primary="true" auto-increment="false" />
 		
-		<column name="createdDate" type="Time" />
-		<column name="modifiedDate" type="Time" />
+		<column name="createdDate" type="Timestamp" />
+		<column name="modifiedDate" type="Timestamp" />
+		<column name="pubDate" type="Timestamp" />
 		
-		<column name="name" type="String" />
+		<column name="title" type="String" />
+		<column name="description" type="Clob" />
+		<column name="link" type="String2" />
+		<column name="author" type="String" />
+		<column name="guid" type="String" />
+		<column name="category" type="String" />
+		<column name="comments" type="Clob" />
 	</entity>
 	
-	<entity name="MigrateEntry" sub-package-path="mg">
-        <!-- PK fields -->
-		<column name="sourceId" type="long" primary="true" auto-increment="false"/>
+	<entity name="MigrateArticle" sub-package-path="mg">
+		<column name="articleId" type="long" primary="true" auto-increment="false" />
 		
-		<!-- Audit fields -->
-
-		<column name="createdDate" type="Time" />
-		<column name="modifiedDate" type="Time" />
-
-		<!-- Foreign Key fields -->
+		<column name="createdDate" type="Timestamp" />
+		<column name="modifiedDate" type="Timestamp" />
+		<column name="pubDate" type="Timestamp" />
 		
-		<!-- Other fields -->
-		<column name="migrateTypeId" type="String" not-null="true" unique="true" />
-		<column name="gorupId" type="String" />
-		<column name="migrateProviderId" type="String" />
-		<column name="classPK" type="String" />
-		<column name="properties" type="String" />
-		<column name="classnameId" type="String" unique="true" />
-		<column name="address" type="String" />
-		<column name="phone" type="String" />
-		<column name="question" type="String" />
-		<column name="answer" type="String" />
-		
-		<!-- Order -->
-		
-		<!-- Finder methods -->
-		<finder name="ClassNamePK" return-type="Collection">
-			<finder-column name="classnameId" />
-			<finder-column name="classPK" />
-		</finder>
-    </entity>
+		<column name="title" type="String" />
+		<column name="description" type="Clob" />
+		<column name="link" type="String2" />
+		<column name="author" type="String" />
+		<column name="guid" type="String" />
+		<column name="category" type="String" />
+		<column name="comments" type="Clob" />
+	</entity>
     
 	<database>
 		<jdbcurl>jdbc:mysql://localhost:3306/liferay?useUnicode=true&amp;characterEncoding=UTF-8</jdbcurl>
